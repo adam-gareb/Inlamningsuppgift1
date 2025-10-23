@@ -66,7 +66,7 @@ public class Guesser {
     // write an error message, and read a new reply.
     // When you have gotten a valid reply, return it.
     reply = new Scanner(System.in).nextLine();
-    while(!reply.equals("T") && !reply.equals("F")){
+    while(!reply.equalsIgnoreCase("T") && !reply.equalsIgnoreCase("F")){
       System.out.println("please answer T or F");
       reply = new Scanner(System.in).nextLine();
     }
@@ -85,7 +85,7 @@ public class Guesser {
       System.out.println("Is the number less than or equal to " +
           middle + "?");
       String reply = getReply();
-      if ("T".equals(reply)) {
+      if ("T".equalsIgnoreCase(reply)) {
         // The number is less than or equal to middle
         // so we move down high to middle
         high = middle;
