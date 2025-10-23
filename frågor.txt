@@ -11,11 +11,11 @@ Push används när man vill skicka ändringar till remote repositoryn.
 
 *När använder man log respektive status?*
 
-Log används när man vill se historiken av alla commits som har gjorts på branchen. Den visar också hashcoden, namn
+Log används när man vill se historiken av alla commits som har gjorts på branchen. Den visar också hash (eller commit ID-sträng), namn
 på författaren samt datumet och tiden commiten gjordes.
 
 Status används när man vill se om nya filer har blivit skapade, modifierade eller slängda från branchen. Den kommer
-också visa om vissa filer ligger inte ligger i staging area (untracked files) samt allmänt ge förslag på kommandon man
+också visa om vissa filer ligger eller inte ligger i staging area (untracked files) samt allmänt ge förslag på kommandon man
 kan använda (såsom git add, git restore för modifierade filer osv.).
 Den visar också längst upp vilken branch man är inne på, och om den är "up to date" med remote
 repositoryn och dess branch.
@@ -53,7 +53,9 @@ Vad som sker när man använder det kommandot är att koden i filen återställs
 en ny commit, där det står 'Revert' samt allt annat som det stog i commiten man valde. Detta tyddliggör för de som
 jobbar i repositoryn från vilken tillstånd filen blev återställd från, och därför kan det vara en fördel att
 använda just 'git revert' i de fallen.
-Jag har använt kommandot 'git revert' med exempelfilen 'changeWithGitRevert.java'.
+Jag har använt kommandot 'git revert' med exempelfilen 'changeWithGitRevert.java',
+och man kan se att det står 'Revert "I now added How are you text to ChangeWithGitRevert.java"', och återställde koden från när det stog "Created
+ChangeWithGitRever.java file and added Hello there text"
 
 Slutligen har vi 'git reset --hard', och kommandot ser ut såhär:
 git reset --hard HEAD~[nummer]
@@ -64,4 +66,5 @@ man valde. Att använda sig av 'git reset --hard' för att återställa koden i 
 behålla någon commit ovanför den valda commiten och också samtidigt vill återställa koden i filen. Däremot går det inte
 att få tillbaka de commiten ovanför samt den föregående koden innan du återställde den, och därför måste man vara 
 väldigt försiktig när man använder sig av 'git reset --hard'.
-Jag använde exempelfilen 'changeWithGitResetHard.java' för kommandot 'git reset --hard'.
+Jag använde exempelfilen 'changeWithGitResetHard.java' för kommandot 'git reset --hard'. Jag hade en commit med hash 'f43c2b0', som var precis ovanför den med hash
+'c16062f', men den togs bort efter att jag använde 'git reset --hard'
