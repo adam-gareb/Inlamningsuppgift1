@@ -1,0 +1,70 @@
+(Jag siktar på att få betyg VG)
+
+
+*Vad är pull respektive push?*
+
+Kommandot pull används i git för att hämta och få ändringar i remote repositoryn.
+
+Push används när man vill skicka ändringar till remote repositoryn.
+
+
+
+*När använder man log respektive status?*
+
+Log används när man vill se historiken av alla commits som har gjorts på branchen. Den visar också hashcoden, namn
+på författaren samt datumet och tiden commiten gjordes.
+
+Status används när man vill se om nya filer har blivit skapade, modifierade eller slängda från branchen. Den kommer
+också visa om vissa filer ligger inte ligger i staging area (untracked files) samt allmänt ge förslag på kommandon man
+kan använda (såsom git add, git restore för modifierade filer osv.).
+Den visar också längst upp vilken branch man är inne på, och om den är "up to date" med remote
+repositoryn och dess branch.
+
+
+
+*Vad är en Git branch och varför är de viktiga?*
+
+En Git Branch är som en referens till en commit som man själv, eller någon annan har gjort. I en branch (som inte är
+är huvudbranchen) har man möjligheten att modifiera samt testa göra ändringar i filer, och göra commits som kanske
+sedan inte bör lagras i huvudprojektet, men som kan läggas till i huvudprojektet (med hjälp av kommandot git merge).
+
+
+
+*Det finns flera sätt att rulla tillbaka koden till ett tidigare tillstånd. Förklara skillnaden och motivera när man 
+skulle använda den ena eller andra metoden. Ge exempel på de kommandon du använder för att göra detta och visa att 
+det fungerar, vilken output du fick från git-kommandona.*
+
+Det finns tre typer av kommandon som man kan använda för att återställa kod i en fil till ett tidigare tillstånd.
+Det är bl.a. 'git restore', 'git revert' och 'git reset --hard'.
+
+För att använda sig av 'git restore' så kan man simpelt skriva kommandot såhär:
+git revert [filnamn]
+Och detta återställer filen till dess senaste commit
+För att återsälla filen till en ännu tidigare commit så kan man skriva kommandot såhär istället:
+git restore --source=HEAD~[nummer] [filnamn]
+eller
+git restore --source=[hash] [filnamn]
+En fördel med att använda 'git restore' är att commit historiken inte påverkas, utan det är bara ändringar i working
+directory (kan också vara ändringar i staged area om man använder --staged), och därför kan det i det fallet vara
+smidigt att använda just 'git restore'.
+Jag har använt kommandot 'git restore' som exempel med filen 'changeWithGitRestore.java', där man kan se i commit
+historiken hur det ser ut att använda 'git restore'.
+
+När man använder sig av 'git revert' så ser kommandot ut såhär:
+git revert [hash]
+Vad som sker när man använder det kommandot är att koden i filen återställs till den commiten man valde, och man får
+en ny commit, där det står 'Revert' samt allt annat som det stog i commiten man valde. Detta tyddliggör för de som
+jobbar i repositoryn från vilken tillstånd filen blev återställd från, och därför kan det vara en fördel att
+använda just 'git revert' i de fallen.
+Jag har använt kommandot 'git revert' med exempelfilen 'changeWithGitRevert.java'.
+
+Slutligen har vi 'git reset --hard', och kommandot ser ut såhär:
+git reset --hard HEAD~[nummer]
+eller
+git reset --hard [hash]
+Detta kommer att ta bort alla commits ovanför den commiten man valde och man får tillbaka ändringarna från den commit
+man valde. Att använda sig av 'git reset --hard' för att återställa koden i en fil kan vara bra om man inte vill
+behålla någon commit ovanför den valda commiten och också samtidigt vill återställa koden i filen. Däremot går det inte
+att få tillbaka de commiten ovanför samt den föregående koden innan du återställde den, och därför måste man vara 
+väldigt försiktig när man använder sig av 'git reset --hard'.
+Jag använde exempelfilen 'changeWithGitResetHard.java' för kommandot 'git reset --hard'.
