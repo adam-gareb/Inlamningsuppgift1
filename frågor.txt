@@ -38,15 +38,12 @@ Det finns tre typer av kommandon som man kan använda för att återställa kod 
 Det är bl.a. 'git restore', 'git revert' och 'git reset --hard'.
 
 För att använda sig av 'git restore' så kan man simpelt skriva kommandot såhär:
-git revert [filnamn]
-Och detta återställer filen till dess senaste commit
-För att återsälla filen till en ännu tidigare commit så kan man skriva kommandot såhär istället:
 git restore --source=HEAD~[nummer] [filnamn]
 eller
 git restore --source=[hash] [filnamn]
 En fördel med att använda 'git restore' är att commit historiken inte påverkas, utan det är bara ändringar i working
 directory (kan också vara ändringar i staged area om man använder --staged), och därför kan det i det fallet vara
-smidigt att använda just 'git restore'.
+smidigt att använda just 'git restore'. Däremot bör man sedan commita på nytt.
 Jag har använt kommandot 'git restore' som exempel med filen 'changeWithGitRestore.java', där man kan se i commit
 historiken hur det ser ut att använda 'git restore'.
 
