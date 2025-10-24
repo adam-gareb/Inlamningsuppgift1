@@ -1,5 +1,7 @@
 (Jag siktar på att få betyg VG)
 
+(Det är här i main branchen jag har den senaste versionen av frågor.txt, inte i restoreCode-branch)
+
 
 *Vad är pull respektive push?*
 
@@ -24,9 +26,10 @@ repositoryn och dess branch.
 
 *Vad är en Git branch och varför är de viktiga?*
 
-En Git Branch är som en referens till en commit som man själv, eller någon annan har gjort. I en branch (som inte är
-är huvudbranchen) har man möjligheten att modifiera samt testa göra ändringar i filer, och göra commits som kanske
-sedan inte bör lagras i huvudprojektet, men som kan läggas till i huvudprojektet (med hjälp av kommandot git merge).
+En Git branch är som en referens till en commit som man själv eller någon annan har gjort. Den kan också visa alla tidigare commits.
+I en branch har man möjligheten att modifiera och göra ändringar i filer, och göra commits som lägger till det i repository, som senare kan 
+läggas in i remote repository. Man kan ha flera branches i en repository, och man kan ha så kallade 'feature-branches' för att göra ändringar 
+som inte finns i huvudbranchen, men som senare kan läggas in i huvudbranchen.
 
 
 
@@ -37,7 +40,7 @@ det fungerar, vilken output du fick från git-kommandona.*
 Det finns tre typer av kommandon som man kan använda för att återställa kod i en fil till ett tidigare tillstånd.
 Det är bl.a. 'git restore', 'git revert' och 'git reset --hard'.
 
-För att använda sig av 'git restore' så kan man simpelt skriva kommandot såhär:
+För att använda sig av 'git restore' så kan man skriva kommandot såhär:
 git restore --source=HEAD~[nummer] [filnamn]
 eller
 git restore --source=[hash] [filnamn]
@@ -75,18 +78,18 @@ ovanför den med hash 'c16062f', men den togs bort efter att jag använde 'git r
 Diskutera fördelarna och nackdelarna med båda teknikerna, samt hur de påverkar historiken.*
 
 När man har jobbat i en feature branch och gjort ändringar som inte är uppdaterade med huvudbranchen så kan man använda sig av kommandot 'git 
-merge'. Vad git merge gör är att hämta ändringar från feature branchen och lägger in det i huvudbranchen. Vad git merge också gör är att visa
-commit historiken i den ordningen de faktiskt gjordes. Man kan se det som en fördel med git merge är att den bevarar commit historiken så som
-den faktiskt var, och då vet man när ändringarna gjordes exakt. Däremot kan det snabbt bli "orent" i commit historiken när man har gjort flera
-merges, och då kan det bli svårt att hänga med alla merges.
-Jag har använt mig av 'git merge' i 'Inlamningsuppgift1-VG-uppgifter' repositoryn,
-där jag har ändrat i filen Main.java, och har mergat från branchen
-'merge-branch' till 'master' branchen.
+merge'. Vad git merge gör är att hämta ändringar från en annan branch och lägger in det i branchen man är inne i. 
+Vad git merge också gör är att visa commit historiken i den ordningen de faktiskt gjordes. 
+Man kan se det som en fördel med git merge är att den bevarar commit historiken så som den faktiskt var, och då vet man när ändringarna 
+gjordes exakt. Däremot kan det snabbt bli "orent" i commit historiken när man har gjort flera merges, och då kan det bli svårt att hänga 
+med i alla merges, och det har 'git merge' som nackdel.
+Jag har använt mig av 'git merge' i 'Inlamningsuppgift1-VG-uppgifter' repositoryn, och har mergat från branchen 'merge-branch' till 'master' 
+branchen.
 När man kollar i commit historiken så ser man att den är lagt i den ordning de gjordes i realtid.
-d0f4381 (HEAD -> master) Resolved conflict and decided to keep what's up text from master				(från master, efter mergen från merge-branch)
-22bd265 Added what's up text in Main.java		   (från master)
-6f3b9ff (merge-branch) added how are you text in Main.java (från merge-branch)
-3e046fb Created Main.java that prints out Hello there      (från master)
+d0f4381 (HEAD -> master) Resolved conflict and decided to keep what's up text from master   (från master, efter mergen från merge-branch)
+22bd265 Added what's up text in Main.java		                                    (från master)
+6f3b9ff (merge-branch) added how are you text in Main.java                                  (från merge-branch)
+3e046fb Created Main.java that prints out Hello there                                       (från master)
 
 
 Man kan också använda sig av kommandot 'git rebase' för att hämta de senaste ändringarna från en branch. Det som rebase gör annorlunda från merge
@@ -95,20 +98,16 @@ branchens commit history. Detta kan ge en känsla av en renare historik, som är
 över 'git merge'.
 Man bör däremot undvika att använda 'git rebase' med branches där flera utvecklare jobbar, då ändringen av commit historiken kan vara
 vilseledande, och kan ge större chans till att man får konfliker. I sådana fall kan 'git rebase' ses som en nackdel. 
-Jag har använt mig av 'git rebase' med master branch och 'rebase-branch' branchen
-i 'Inlamningsuppgift1-VG-uppgifter' repository,
-där jag gjorde rebase i 'rebase-branch' för att få från master.
-Då fick jag en konflikt i 'c309e73', och behövde ändra i den raden som är
-markerad med '<<<<<', '====' och '>>>>>', och därmed bestämma mig för vilken 
-av de två raderna jag vill behålla.
-När jag var klar med att ändra innehållet i filen så körde jag 'git rebase --continue', för att låta rebase kommandot fortsätta.
-När man sedan kollar med 'git log' eller 'git log --oneline', 
-så ser man tydligt de commit som har hänt och kommit från 
-master branchen då de alla ligger ovanpå all annan commit i rebase-branch (även 
-om jag ändrade parallellt mellan master och rebase-branch).
+Jag har använt mig av 'git rebase' med master branch och 'rebase-branch' i 'Inlamningsuppgift1-VG-uppgifter' repository, där jag gjorde 
+rebase i 'rebase-branch' för att få uppdateringar från master.
+Då fick jag en konflikt i 'c309e73', och behövde ändra i den raden som är markerad med '<<<<<', '====' och '>>>>>', och därmed bestämma mig för 
+vilken av de två raderna jag vill behålla.
+När jag var klar med att hantera konfliketet i filen så körde jag 'git rebase --continue', för att låta rebase kommandot fortsätta.
+När man sedan kollar med 'git log' eller 'git log --oneline', så ser man tydligt de commit som har hänt och kommit från master branchen då de
+alla ligger ovanpå all annan commit i rebase-branch (även om jag ändrade fram och tillbaka mellan master och rebase-branch).
 b882d9c (HEAD -> rebase-branch) Resolved conflict with rebase and decided to keep Hope you are well text  (rebase-branch efter jag gjorde rebase)
-ba02367 (master) added Hoping all is well text in master branch (master)
-d0f4381 Resolved conflict and decided to keep what's up text from master (master)
-22bd265 Added what's up text in Main.java (master)
-6f3b9ff (merge-branch) added how are you text in Main.java (master)
-3e046fb Created Main.java that prints out Hello there (master)
+ba02367 (master) added Hoping all is well text in master branch                                           (master)
+d0f4381 Resolved conflict and decided to keep what's up text from master                                  (master)
+22bd265 Added what's up text in Main.java                                                                 (master)
+6f3b9ff (merge-branch) added how are you text in Main.java                                                (master)
+3e046fb Created Main.java that prints out Hello there                                                     (master)
