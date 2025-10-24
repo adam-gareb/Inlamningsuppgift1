@@ -66,5 +66,23 @@ man valde. Att använda sig av 'git reset --hard' för att återställa koden i 
 behålla någon commit ovanför den valda commiten och också samtidigt vill återställa koden i filen. Däremot går det inte
 att få tillbaka de commiten ovanför samt den föregående koden innan du återställde den, och därför måste man vara 
 väldigt försiktig när man använder sig av 'git reset --hard'.
-Jag använde exempelfilen 'changeWithGitResetHard.java' för kommandot 'git reset --hard'. Jag hade en commit med hash 'f43c2b0', som var precis ovanför den med hash
-'c16062f', men den togs bort efter att jag använde 'git reset --hard'
+Jag använde exempelfilen 'changeWithGitResetHard.java' för kommandot 'git reset --hard'. Jag hade en commit med hash 'f43c2b0', som var precis 
+ovanför den med hash 'c16062f', men den togs bort efter att jag använde 'git reset --hard'
+
+
+
+*Beskriv och jämför hur man kan använda git rebase och git merge i ett scenario där flera utvecklare jobbar på olika feature branches. 
+Diskutera fördelarna och nackdelarna med båda teknikerna, samt hur de påverkar historiken.*
+
+När man har jobbat i en feature branch och gjort ändringar som inte är uppdaterade med huvudbranchen så kan man använda sig av kommandot 'git 
+merge'. Vad git merge gör är att hämta ändringar från feature branchen och lägger in det i huvudbranchen. Vad git merge också gör är att visa
+commit historiken i den ordningen de faktiskt gjordes. Man kan se det som en fördel med git merge är att den bevarar commit historiken så som
+den faktiskt var, och då vet man när ändringarna gjordes exakt. Däremot kan det snabbt bli "orent" i commit historiken när man har gjort flera
+merges, och då kan det bli svårt att hänga med alla merges.
+
+Man kan också använda sig av kommandot 'git rebase' för att hämta de senaste ändringarna från en branch. Det som rebase gör annorlunda från merge
+är att den ändrar på commit historiken. Den ser till att hämta commitsen från den andra branchen och lägga den ovanför all annan av den aktuella 
+branchens commit history. Detta kan ge en känsla av en renare historik, som är lättare att följa, och därför kan 'git rebase' ses som en fördel
+över 'git merge'.
+Man bör däremot undvika att använda 'git rebase' med branches där flera utvecklare jobbar, då ändringen av commit historiken kan vara
+vilseledande, och kan ge större chans till att man får konfliker. I sådana fall kan 'git rebase' ses som en nackdel. 
